@@ -18,11 +18,11 @@ export const dataProvider = (
   getList: async ({ resource, pagination, filters, sorters, meta }) => {
     const url = `${apiUrl}/${resource}`;
 
-
     let query: CrudQuery = {};
 
     query = handlePagination(query, pagination);
     query = handleFilter(query, filters);
+    query = handleSort(query, sorters);
 
     // let crudQuery: CrudQuery = {
     //   where: handleFilter(query, filters),
@@ -35,11 +35,7 @@ export const dataProvider = (
     //   // page?: number;
     //   // pageSize?: number;
     // }
-
-    // query = handleFilter(query, filters);
     // query = handleJoin(query, meta?.join);
-    // query = handlePagination(query, pagination);
-    // query = handleSort(query, sorters);
 
     const { data } = await httpClient.get(`${url}?${new URLSearchParams({ crudQuery: JSON.stringify(query) })}`);
 
